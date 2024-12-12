@@ -13,7 +13,7 @@ Banco::Banco()
 	int randomNumber = dist(gen);
 	int xm = 50, ym = 50;
 	int d = 30;
-	for (int i = 0; i < 10; i++) 
+	for (int i = 0; i < 10; i++) //khai báo bàn cờ thứ nhất(của bot )nơi người chơi sẽ tương tác với chuột
 	{
 		for (int j = 0; j < 10; j++)
 		{
@@ -22,14 +22,14 @@ Banco::Banco()
 		}
 	}
 	int xm1 = 400, ym1 = 50;
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 10; i++) // khai báo bàn cờ thứ 2(bàn cờ người chơi) nơi mà bot tương tác 
 	{
 		for (int j = 0; j < 10; j++)
 		{
 			Mang2[i][j].setHcn(xm1 + j * d, ym1 + i * d, xm1 + j * d + d, ym1 + i * d + d);
 		}
 	}
-	int dem1 = 0;
+	int dem1 = 0; // random thuyền trong các ô bàn cờ của bot
 	int rani1 = 0, ranj1 = 0;
 	while (dem1 < 10)
 	{
@@ -42,7 +42,7 @@ Banco::Banco()
 		}
 
 	}
-	int dem2 = 0;
+	int dem2 = 0;   // random thuyền trong các ô bàn cờ của người chơi
 	int rani2 = 0, ranj2 = 0;
 	while (dem2 < 10)
 	{
@@ -62,7 +62,6 @@ Banco::Banco()
 		{
 			if (Mang1[i][j].thuyen != 1)
 			{
-				//Mang1[i][j].sl = xungquanhthuyen(i, j);
 				Mang1[i][j].sl = 1;
 			}
 		}
@@ -71,14 +70,14 @@ Banco::Banco()
 
 void Banco::draw(CPaintDC* dc)
 {
-	for (int i = 0; i < 10; i++) 
+	for (int i = 0; i < 10; i++) //vẽ bàn cờ t1
 	{
 		for (int j = 0; j < 10; j++) 
 		{
 			Mang1[i][j].draw(dc);
 		}
 	}
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 10; i++) // vẽ bàn cờ t2
 	{
 		for (int j = 0; j < 10; j++)
 		{
@@ -105,32 +104,10 @@ void Banco::draw(CClientDC* pdc)
 	}
 }
 
-void Banco::xungquanhthuyen(int mi, int mj)//cai lay ch cho vao dc
-{
-	if (Mang1[mi][mj].thuyen == 0)
-	{
-		Mang1[mi][mj].dong = 0;
-	}
-	for (int i = -1; i < 2; i++)
-	{
-		for (int j = -1; j < 2; j++)
-		{
-			if (mi + i >= 0 && mi + i < 10 && mj + j >= 0 && mj + j < 10)
-			{
-				if (i != 0 || j != 0)
-				{
-					xungquanhthuyen(mi + i, mj + j);
-				}
-			}
-		}
-	}
-}
 
-
-void Banco::mouseclick(CPoint p, CClientDC* pdc)
+void Banco::mouseclick(CPoint p, CClientDC* pdc) 
 {
 	
-	int extrapress = 0;
 	if (control == 1)
 	{
 		std::random_device rd;
@@ -152,16 +129,14 @@ void Banco::mouseclick(CPoint p, CClientDC* pdc)
 					{
 						Mang1[i][j].bcolor = 2;
 						Mang1[i][j].draw(pdc);
-						extrapress++;
-						//nguoiwin++;
 						if (ktraWin(i, j) == 0)
 						{
 							control = 0;
-							return; // End the game if a winner is found
+							return; 
 						}
 						
 						
-						//return;
+						return;
 					}
 					
 					int randomcount = 1;
@@ -177,7 +152,7 @@ void Banco::mouseclick(CPoint p, CClientDC* pdc)
 								Mang2[rani2][ranj2].bcolor = 2;
 								Mang2[rani2][ranj2].draw(pdc);
 								randomcount++;
-								//botwin++;
+								
 								
 							}
 							else
@@ -190,7 +165,7 @@ void Banco::mouseclick(CPoint p, CClientDC* pdc)
 							if (ktraWin(rani2, ranj2) == 0)
 							{
 								control = 0;
-								return; // End the game if a winner is found
+								return; 
 							}
 						}
 						
@@ -207,7 +182,7 @@ void Banco::mouseclick(CPoint p, CClientDC* pdc)
 
 }
 
-void Banco::xuatWin(CClientDC* dc)
+void Banco::xuatWin(CClientDC* dc) // xuất ra màn hình nếu 1 trong 2 win
 {
 	CString strx, stro;
 	strx.Format(_T("You win"));
